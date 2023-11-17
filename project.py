@@ -1,5 +1,5 @@
 import json
-
+import os
 # Brings the JSON file and convert it to a dictionary
 with open("patients.txt", 'r') as file: 
     patients = json.loads(file.read())
