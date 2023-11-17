@@ -58,3 +58,38 @@ def UpdateInfo():
     patients[ID][info.lower()] = new_info
 
     rewrite()
+def add_medical_history():
+    ID = input("Please enter the patient ID: ")
+    patient_data = patients.get(ID)
+    if ID not in patients:
+        print("ID does not exist")
+        return 
+
+    patient_name = patient_data.get("name")
+    if ID not in patients:
+        print("Patient name is not registerd.")
+        return 
+
+    doctor = input(f"Please enter {patient_name}'s doctor: ")
+    last_visit=input(f"Please enter {patient_name}'s last visit: ")
+    diagnosis = input(f"Please enter {patient_name}'s diagnosis: ")
+    medications = input(f"Please enter {patient_name}'s medications: ")
+    advice = input(f"Please enter {patient_name}'s advice: ")
+
+    medical_history_data = {
+        "name": patient_name,
+        "Correspondent Doctor": doctor,
+        "Last Visit": last_visit,
+        "diagnosis": diagnosis,
+        "medications": medications,
+        "advice": advice
+    }
+    directory="C:\\Users\\GAMER\\Desktop\\ICS\\test\\ICS104-Project\\Patient" #change the path to your patient folder 
+    file_name=ID + ".txt"
+    full_path=os.path.join(directory,file_name)
+    with open(full_path, 'a') as file2:
+        file2.write(json.dumps({ID: medical_history_data}) + '\n')
+
+    return medical_history_data
+
+add_medical_history()
