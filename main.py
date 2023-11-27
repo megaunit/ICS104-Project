@@ -8,7 +8,7 @@ with open("patients.txt", 'r') as file:
 #for more simplicity so we can recall it later any time
 def rewrite():
     with open("patients.txt", 'w') as file:
-            file.write(json.dumps(patients, indent=2, sort_keys=True)) 
+            file.write(json.dumps(patients, indent=2)) 
 
 def AddPatient():
     ID = input("Please enter the patient ID: ")
@@ -29,6 +29,7 @@ def AddPatient():
         
         birthday = f"{day}/{month}/{year}"
         patients[ID] = {
+            "ID" : ID,
             "name": name,
             "gender": gender,
             "birthday": birthday,
@@ -61,6 +62,7 @@ def UpdateInfo():
     patients[ID][info.lower()] = new_info
 
     rewrite()
+
 def add_medical_history():
     ID = input("Please enter the patient ID: ")
     patient_data = patients.get(ID)
@@ -95,7 +97,7 @@ def add_medical_history():
 
     return medical_history_data
 
-def createTable(header, givenValues):
+def displayTable(header, givenValues):
     # givenValues must be nested lists where each list is a row
     structure = [header]
     structure.extend(givenValues)
@@ -107,8 +109,6 @@ def createTable(header, givenValues):
                 continue
             if len(str(element)) > columns_width[column]:
                 columns_width[column] = len(str(element))
-    rows = header[:]
-    rows.append(givenValues)
     horizontalDividerLen = (len(columns_width)-1)*3 # Adds the sum of widths of all vertical dividers
     for i in columns_width:
         horizontalDividerLen+=i
@@ -127,3 +127,32 @@ def createTable(header, givenValues):
 
 # A useful example of how this function works in case tests are needed
 # createTable(list(choice(list(patients.values())).keys()), [["@"*randint(1,4) for i in range(7)] for _ in range (3)])
+
+
+def sortData(sorting):
+    # sorts data based on user choice
+    data = []
+    index = 0
+    for patient in patients:
+        data.append([])
+        for info in patients[patient]:
+            # print(info)
+            # data[index].append(patients[patients][info])
+            # print(patients[patient][info])
+            data[index].append(patients[patient][info])
+        # print("\n\n\n")
+        index += 1
+    
+    if sorting == "id":
+        data.sort() # sorts by first element, which is ID in this  case
+    elif sorting == "name":
+        data.sort(key= lambda x:x[1])
+    elif sorting == "city":
+        data.sort(key= lambda x:x[5])
+    return data
+
+def DisplayData():
+    header = ['ID', 'Name', 'Gender', 'Birthday', 'Blood', 'City', 'Number', 'Email']
+    sort = input("(ID, Name, City)\nChoose how do you want to sort the data in the table: ")
+    sort = sort.lower()
+    displayTable(header, sortData(sort))
