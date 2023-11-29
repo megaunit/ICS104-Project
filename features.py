@@ -1,12 +1,13 @@
 # This file aims to separate contain the main features our program offers
 
-from our_tools import rewrite, AskID, DisplayTable
+from our_tools import rewrite, AskID, GetData, DisplayTable
+
 
 
 
 def AddPatient(patients):
     ID = input("Enter the patient's ID: ")
-    if ID not in ID.isdigit():
+    if not ID.isdigit():
         print("ID numbers can only consist of digits") # To ensure the user can't enter letters, this is helpful for sorting later
         return
     elif ID in patients:
@@ -35,10 +36,10 @@ def AddPatient(patients):
         "email": email
     }
 
-    rewrite()
+    rewrite(patients)
 
 def UpdateInfo(patients):
-    ID = AskID()
+    ID = AskID(patients)
     if ID == None:
         return
     
@@ -57,13 +58,13 @@ def UpdateInfo(patients):
         new_info = input(f"Enter the new {info}: ")
     patients[ID][info.lower()] = new_info
 
-    rewrite()
+    rewrite(patients)
 
 def AddMedicalHistory(patients):
-    ID = AskID()
+    ID = AskID(patients)
     if ID == None:
         return
-
+    
     patient_data = patients.get(ID) # .get() will return None if ID doesn't exist
     patient_name = patient_data.get("name")
     
@@ -76,27 +77,34 @@ def AddMedicalHistory(patients):
     advice = input(f"Enter {patient_name}'s advice: ")
     last_visit = f"{last_visit_day}/{last_visit_month}/{last_visit_year}"
 
-    medical_history_data = {
+    new_medical_history = {
+        "PatientID" : ID,
+        "PatientName" : patient_name,
         "Correspondent Doctor": doctor,
         "Last Visit": last_visit,
         "diagnosis": diagnosis,
         "medications": medicine,
         "advice": advice
-    }
-
-    patients[ID]["medical_history"] = medical_history_data
-    rewrite()
-
-    return medical_history_data
+        }
+    
+    medical_history_data = patients[ID].get('medical_history')
+    if medical_history_data == None: # Checks if he doesn't have medical history before
+        patients[ID]['medical_history'] = {}
+        patients[ID]['medical_history']["1"] = new_medical_history
+    else:
+        medical_files_count = len(medical_history_data)+1
+        patients[ID]["medical_history"][medical_files_count] = new_medical_history
+    
+    rewrite(patients)
 
 def DisplayData(patients):
-    header = ['ID', 'Name', 'Gender', 'Birthday', 'Blood', 'City', 'Number', 'Email']
+    header = ['ID', 'Name', 'Gender', 'Birthday', 'Blood', 'City', 'Number', 'Email'] # the header of the table
     data = [] # list which will contain all patients data as nested lists
 
     # adds patients data to the data list
     for patient in patients:
         data.append([patients[patient][info] for info in patients[patient] if info != 'medical_history'])
-
+    
     # ask the user how he wants to sort the data
     while True:
         sorting = input("(ID, Name, City)\nChoose how do you want to sort the data in the table: ")
@@ -113,5 +121,30 @@ def DisplayData(patients):
         data.sort(key= lambda x:x[1]) # lambda function helps specifying index of element which will be key of sorting
     elif sorting == "city":
         data.sort(key= lambda x:x[5]) 
-
+    
     DisplayTable(header, data)
+
+def DisplayPatientInfo(patients):
+    ID = AskID(patients)
+    if ID == None:
+        return
+    
+    patientData = patients.get(ID)
+    
+    header = ['ID', 'Name', 'Gender', 'Birthday', 'Blood', 'City', 'Number', 'Email'] # the header of the table
+    data = [[patients[ID][info] for info in patientData if info != "medical_history"]]
+
+    try:
+        medicalHistoryHeader = ['PatientID', 'PatientName', 'Correspondent Doctor', 'Last Visit', 'Diagnosis', 'Medicine', 'Advice']
+        medicalHistoryData = [[patientData['medical_history'][file_number][info] for info in patients[ID]['medical_history'][file_number]] for file_number in patientData['medical_history'].keys()]
+        
+        print("\nPatient data: ")
+        DisplayTable(header, data)
+        print("Patient Medical History: ")
+        DisplayTable(medicalHistoryHeader, medicalHistoryData)
+
+    except KeyError as error: # To make sure patient has a medical history
+        if str(error) == "'medical_history'":
+            print("Patient has no medical history")
+        else:
+            raise error
