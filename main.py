@@ -4,17 +4,17 @@ from our_tools import Rerun, ClearConsole, GetData
 def main():
     ClearConsole()
     while True:
-        task = input("\n(Add-> AddPatient, Up -> UpdateInfo, AddMed -> AddMedicalHistory, Dis -> DisplayData, DisPa -> DisplayPatientInfo)\nChoose what do you want to do: ")
+        task = input("\n1 - Add patient\n2 - Update patient info\n3 - Add medical history\n4 - Display all data\n5 - Display a specific patient's info\nChoose what do you want to do: ")
         task = task.lower()
-        if task == "add":
+        if task == "1":
             AddPatient(GetData())
-        elif task == "up":
+        elif task == "2":
             UpdateInfo(GetData())
-        elif task == "addmed":
+        elif task == "3":
             AddMedicalHistory(GetData())
-        elif task == "dis":
+        elif task == "4":
             DisplayData(GetData())
-        elif task == "dispa":
+        elif task == "5":
             DisplayPatientInfo(GetData())
         else:
             ClearConsole()
