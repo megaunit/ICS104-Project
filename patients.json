@@ -39,7 +39,7 @@
             "4": {
                 "PatientID": "1001",
                 "PatientName": "sami khdera",
-                "Correspondent Doctor": "\u0628\u064a\u0633\u0634",
+                "Correspondent Doctor": "dr. 7mar",
                 "Last Visit": "gteht/bvfds/hythgf",
                 "diagnosis": "bgfsth",
                 "medications": "hgrehyt",
@@ -55,16 +55,6 @@
                 "advice": "ayay"
             }
         }
-    },
-    "101": {
-        "ID": "101",
-        "name": "fdasfs",
-        "gender": "fdasfdsa",
-        "birthday": "fdasfdsaf/fdasfsdaf/fdasfdsaf",
-        "blood": "fdsafsdf",
-        "city": "fdasfdsaf",
-        "number": "fdasfdsaf",
-        "email": "fdasfdsaf"
     },
     "1002": {
         "ID": "1002",
@@ -95,5 +85,26 @@
         "city": "Jeddah",
         "number": "NoNumber",
         "email": "NoEmail"
+    },
+    "101": {
+        "ID": "101",
+        "name": "fdasfs",
+        "gender": "fdasfdsa",
+        "birthday": "fdasfdsaf/fdasfsdaf/fdasfdsaf",
+        "blood": "fdsafsdf",
+        "city": "fdasfdsaf",
+        "number": "fdasfdsaf",
+        "email": "fdasfdsaf",
+        "medical_history": {
+            "1": {
+                "PatientID": "101",
+                "PatientName": "fdasfs",
+                "Correspondent Doctor": "fdsa",
+                "Last Visit": "fdsa/fdsa/fdsa",
+                "diagnosis": "fdas",
+                "medications": "fdsa",
+                "advice": "fdas"
+            }
+        }
     }
 }

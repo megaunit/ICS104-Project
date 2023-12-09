@@ -1,0 +1,7 @@
+PatientID:101
+PatientName:fdasfs
+Correspondent Doctor:fdsa
+Last Visit:fdsa/fdsa/fdsa
+diagnosis:fdas
+medications:fdsa
+advice:fdas

@@ -1,0 +1,7 @@
+PatientID:1004
+PatientName:Yousef
+Correspondent Doctor:Abdullah
+Last Visit:15/10/2019
+diagnosis:fever
+medications:panadol
+advice:rest

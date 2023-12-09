@@ -1,6 +1,6 @@
 # This file aims to separate contain the main features our program offers
 
-from our_tools import rewrite, AskID, GetData, DisplayTable
+from our_tools import rewrite, AskID, DisplayTable, newRewrite
 
 
 
@@ -36,7 +36,8 @@ def AddPatient(patients):
         "email": email
     }
 
-    rewrite(patients)
+    # rewrite(patients)
+    newRewrite(patients)
 
 def UpdateInfo(patients):
     ID = AskID(patients)
@@ -58,7 +59,8 @@ def UpdateInfo(patients):
         new_info = input(f"Enter the new {info}: ")
     patients[ID][info.lower()] = new_info
 
-    rewrite(patients)
+    # rewrite(patients)
+    newRewrite(patients)
 
 def AddMedicalHistory(patients):
     ID = AskID(patients)
@@ -95,7 +97,9 @@ def AddMedicalHistory(patients):
         medical_files_count = len(medical_history_data)+1
         patients[ID]["medical_history"][medical_files_count] = new_medical_history
     
-    rewrite(patients)
+    # rewrite(patients)
+    newRewrite(patients)
+    print("New medical history added successfully")
 
 def DisplayData(patients):
     header = ['ID', 'Name', 'Gender', 'Birthday', 'Blood', 'City', 'Number', 'Email'] # the header of the table

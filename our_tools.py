@@ -2,6 +2,7 @@
 
 import json
 import os
+import os.path as path
 
 # Gets information from patients.txt and convert it to a dictionary
 def GetData():
@@ -9,10 +10,56 @@ def GetData():
         patients = json.loads(file.read())
     return patients
 
+def newGetData():
+    patients = {}
+    for patient in os.listdir("./patients"):
+        patients[patient] = {}  
+        with open(f"./patients/{patient}/data.txt", 'r') as file:
+            content = file.readlines()
+            for line in content:
+                info = line.strip().split(":")
+                patients[patient][info[0]] = info[1]
+        if not os.listdir(f"./patients/{patient}/medical_history"):
+            continue
+        patients[patient]["medical_history"] = {} # to initiate a medical history
+        for medicalFile in os.listdir(f"./patients/{patient}/medical_history"):
+            with open(f"./patients/{patient}/medical_history/{medicalFile}", 'r') as file:
+                content = file.readlines()
+                patients[patient]["medical_history"][medicalFile.strip(".txt")] = {} 
+                for line in content:
+                    info = line.strip().split(":")
+                    patients[patient]["medical_history"][medicalFile.strip(".txt")][info[0]] = info[1]
+            # patients[patient]
+
+    return patients
+
 # rewrite new changes current (patients) dictionary to patients.txt file
 def rewrite(patients):
     with open("patients.json", 'w') as file:
         file.write(json.dumps(patients, indent=4)) 
+
+def newRewrite(patients):
+    for patient in patients:
+
+        # First, we deal with the patient's personal data
+        data = patients.get(patient)
+        if not path.exists(f"./patients/{patient}"): # to check if patient file exists or not
+            os.mkdir(f"./patients/{patient}")
+        with open(f"./patients/{patient}/data.txt", 'w') as file:
+            for key in data:
+                if key != "medical_history": # Because we will save medical histories in a different folder
+                    file.write(f"{key}:{data[key]}\n")
+
+        # Second, we deal with patient's medical histories
+        if not path.exists(f"./patients/{patient}/medical_history"): # to check if medical history folder exist or not
+            os.mkdir(f"./patients/{patient}/medical_history")
+        if not "medical_history" in data: # in case the patient doesn't have a medical_history yet
+            continue
+        for visitNumber in data['medical_history']:
+            with open(f"./patients/{patient}/medical_history/{visitNumber}.txt", 'w') as file:
+                visitFile = data['medical_history'].get(visitNumber)
+                for key in visitFile:
+                    file.write(f"{key}:{visitFile[key]}\n") 
 
 # prompt the user to enter the needed ID with the needed checks
 def AskID(patients):
@@ -76,3 +123,4 @@ def Rerun():
             return False
         else:
             print("only choose y or n")
+

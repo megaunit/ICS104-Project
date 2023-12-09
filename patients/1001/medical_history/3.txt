@@ -1,0 +1,7 @@
+PatientID:1001
+PatientName:sami khdera
+Correspondent Doctor:sec
+Last Visit:sec/sec/sec
+diagnosis:sec
+medications:sec
+advice:sec

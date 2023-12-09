@@ -1,0 +1,7 @@
+PatientID:1001
+PatientName:sami khdera
+Correspondent Doctor:dr. 7mar
+Last Visit:gteht/bvfds/hythgf
+diagnosis:bgfsth
+medications:hgrehyt
+advice:grtwgf

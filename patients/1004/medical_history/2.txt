@@ -1,0 +1,7 @@
+PatientID:1004
+PatientName:Yousef
+Correspondent Doctor:Salem
+Last Visit:19/5/2020
+diagnosis:cancer
+medications:sleep
+advice:sleep

@@ -1,5 +1,5 @@
 from features import AddPatient, UpdateInfo, AddMedicalHistory, DisplayData, DisplayPatientInfo
-from our_tools import Rerun, ClearConsole, GetData
+from our_tools import Rerun, ClearConsole, GetData, newGetData
 
 def main():
     ClearConsole()
@@ -7,15 +7,15 @@ def main():
         task = input("\n1 - Add patient\n2 - Update patient info\n3 - Add medical history\n4 - Display all data\n5 - Display a specific patient's info\nChoose what do you want to do: ")
         task = task.lower()
         if task == "1":
-            AddPatient(GetData())
+            AddPatient(newGetData())
         elif task == "2":
-            UpdateInfo(GetData())
+            UpdateInfo(newGetData())
         elif task == "3":
-            AddMedicalHistory(GetData())
+            AddMedicalHistory(newGetData())
         elif task == "4":
-            DisplayData(GetData())
+            DisplayData(newGetData())
         elif task == "5":
-            DisplayPatientInfo(GetData())
+            DisplayPatientInfo(newGetData())
         else:
             ClearConsole()
             print('Only choose from given choices')

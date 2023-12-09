@@ -1,0 +1,7 @@
+PatientID:1001
+PatientName:sami khdera
+Correspondent Doctor:NoName
+Last Visit:20/20/2020
+diagnosis:nothing
+medications:nothing
+advice:nothing
